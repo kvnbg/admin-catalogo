@@ -4,7 +4,6 @@ import com.kvnbg.admin.catalogo.domain.AggregateRoot;
 import com.kvnbg.admin.catalogo.domain.validation.ValidationHandler;
 
 import java.time.Instant;
-import java.util.UUID;
 
 public class Category extends AggregateRoot<CategoryID> {
 
@@ -63,8 +62,17 @@ public class Category extends AggregateRoot<CategoryID> {
         return this;
     }
 
-    public CategoryID getId() {
-        return id;
+    public Category update(final String aName, final String aDescription, final boolean isActive) {
+        if(isActive) {
+            activate();
+        } else {
+            deactivate();
+        }
+        this.name = aName;
+        this.description = aDescription;
+        this.updatedAt = Instant.now();
+
+        return this;
     }
 
     public String getName() {
